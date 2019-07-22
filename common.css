@@ -1,0 +1,44 @@
+.container {
+    margin: auto;
+}
+nav {
+    padding: 10px 0px;
+}
+.card {
+    display: block;
+}
+.btn-primary {
+    color: #fff;
+    padding: 0px 5px;
+    background-color: #00BCD4;
+    border-color: #00BCD4;
+}
+.float-right {
+    margin-top: 72px;
+    margin-right: 72px;
+}
+#postBtn {
+    color: #fff;
+    font-size: 24px;
+}
+h2 {
+    display: inline-block;
+}
+.text-right {
+    display: inline;
+}
+.btn.btn-primary.rounded-pill.btn-lg {
+    margin-bottom: 0.5rem;
+    float: right;
+}
+.col {
+    margin-bottom: 1.0rem;
+    width: auto;
+}
+
+ /* Medium devices (tablets, 768px and up) */
+@media (min-width: 1200px) { 
+div.card {
+    width: 30rem;
+}
+}
