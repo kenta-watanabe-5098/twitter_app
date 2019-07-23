@@ -33,7 +33,7 @@
         
         <div class="card-group">
             <div class="row">
-                <div class="col">
+                <div class="col-auto">
                     <div class="card" style="width: 18rem;">
                         <a href="view.php" data-toggle="tooltip" title="投稿詳細を開く">
                             <img src="../twitter_app/images/test1.jpg" class="card-img-top" alt="images/test1.jpg">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 
-                <div class="col">
+                <div class="col-auto">
                     <div class="card" style="width: 18rem;">
                         <a href="view.php" data-toggle="tooltip" title="投稿詳細を開く">
                             <img src="../twitter_app/images/test1.jpg" class="card-img-top" alt="images/test1.jpg">
@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="col">
+                <div class="col-auto">
                     <div class="card" style="width: 18rem;">
                         <a href="view.php" data-toggle="tooltip" title="投稿詳細を開く">
                             <img src="../twitter_app/images/test1.jpg" class="card-img-top" alt="images/test1.jpg">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
 
-                <div class="col">
+                <div class="col-auto">
                     <div class="card" style="width: 18rem;">
                         <a href="view.php" data-toggle="tooltip" title="投稿詳細を開く">
                             <img src="../twitter_app/images/test1.jpg" class="card-img-top" alt="images/test1.jpg">

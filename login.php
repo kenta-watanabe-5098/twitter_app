@@ -1,3 +1,42 @@
+<?php
+session_start();
+require('dbconnect.php');
+
+if(!empty($_COOKIE['email'])) {
+    $email = $_COOKIE['email'];
+}
+
+if(!empty($_POST)) {
+    $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
+    $pass = htmlspecialchars($_POST['password'], ENT_QUOTES);
+    $email = htmlspecialchars($_POST['email'], ENT_QUOTES);
+    $pass = hash('sha256', $pass);
+
+    $stmt = $db->prepare('SELECT email FROM members WHERE email=?');
+    $stmt->execute([$email]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($data) {
+        $error = [];
+        $error['email'] = 1;
+    } else {
+        if($_POST['check'] == 'on') {
+            setcookie('email', $_POST['email'], time() + 3600 * 24 * 7);
+            setcookie('password', $_POST['password'], time() + 3600 * 24 * 7);
+            setcookie('name', $_POST['name'], time() + 3600 * 24 * 7);
+        }
+
+        $stmt = $db->prepare('INSERT INTO members(name, password, email) VALUES(?, ?, ?)');
+        $stmt->execute(array($name, $pass, $email));
+    
+        $db = null;
+
+        header('Location: regist_done.php');
+        exit();
+    }
+
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
