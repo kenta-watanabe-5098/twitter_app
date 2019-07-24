@@ -1,41 +1,38 @@
 <?php
-require('dbconnect.php');
-$error = [];
+session_start();
+$message1 = null;
+$message2 = null;
+$message3 = null;
 
-if(isset($_POST['username']) && $_POST['username'] == '' && mb_strlen($_POST['username']) < 3) {
-    $error['username'] = 1;
+$username = null;
+$password = null;
+$email = null;
+
+if(isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
 }
-if(isset($_POST['password']) && $_POST['password'] == '' && mb_strlen($_POST['password']) < 7) {
-    $error['password'] = 1;
+
+if(isset($_SESSION['password'])) {
+    $password = $_SESSION['password'];
 }
-if(isset($_POST['email']) && $_POST['email'] == '') {
-    $error['email'] = 1;
+
+if(isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+}
+
+if(isset($_SESSION['username_error']) == '1') {
+    $message2 = '正しく入力ください';
+}
+if(isset($_SESSION['email_error']) == '1') {
+    $message1 = '正しく入力ください';
+}
+if(isset($_SESSION['email_error']) == '2') {
+    $message1 = 'すでに登録済のメールアドレスです';
+}
+if(isset($_SESSION['password_error']) == '1') {
+    $message3 = '正しく入力ください';
 } 
 
-
-if(!empty($_POST) && $error == []) {
-    $name = htmlspecialchars($_POST['username'], ENT_QUOTES);
-    $pass = htmlspecialchars($_POST['password'], ENT_QUOTES);
-    $email = htmlspecialchars($_POST['email'], ENT_QUOTES);
-    $pass = hash('sha256', $pass);
-
-    $stmt = $db->prepare('SELECT email FROM members WHERE email=?');
-    $stmt->execute([$email]);
-    $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-    if($data) {
-        $error['email'] = 2;
-    } else {
-        $stmt = $db->prepare('INSERT INTO members(name, password, email) VALUES(?, ?, ?)');
-        $stmt->execute(array($name, $pass, $email));
-    
-        $db = null;
-
-        header('Location: regist_done.php');
-        exit();
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -65,41 +62,38 @@ if(!empty($_POST) && $error == []) {
 
         <h2>新規登録</h2>
 
-        <form id="twitter" action="" method="post" class="needs-validation" novalidate>
+        <form id="twitter" action="regist_check.php" method="post" class="needs-validation" novalidate>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">Eメール</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Eメール" required value="<?php if(isset($_POST['email'])) { print($_POST['email']);} ?>" onblur="emailCheck();">
-                        <?php if(isset($error['email']) && $error['email'] === 1): ?>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Eメール" required value="<?php print($email); ?>" onchange="emailCheck();">
+                        <?php if(isset($_SESSION['email'])): ?>
                             <div class="error">
-                                正しく入力ください
+                                <?php print($message1); ?>
                             </div>
                         <?php endif; ?>
-                        <div class='error'>
-                            <?php if(isset($error['email']) && $error['email'] === 2) { print('すでに登録済みのメールアドレスです'); } ?>
-                        </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="password">パスワード</label>
-                        <input type="password" class="form-control"  id="password" name="password" placeholder="パスワード" required value="<?php if(isset($_POST['password'])) { print($_POST['password']);} ?>" onblur="passwordCheck();">
+                        <input type="password" class="form-control"  id="password" name="password" placeholder="パスワード" required value="<?php print($password); ?>" onchange="passwordCheck();">
                             <div class="caption">
                                 ※パスワードは8文字以上で登録ください
                             </div>
-                        <?php if(isset($error['password']) && $error['password'] > 0): ?>
+                        <?php if(isset($_SESSION['password'])): ?>
                             <div class="error">
-                                正しく入力ください
+                                <?php print($message3); ?>
                             </div>
                         <?php endif; ?>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="username">ユーザー名</label>
-                        <input type="text" class="form-control" id="username" name="username" aria-describedby="inputGroupPrepend" required value="<?php if(isset($_POST['username'])) { print($_POST['username']);} ?>" onblur="nameCheck();">
+                        <input type="text" class="form-control" id="username" name="username" aria-describedby="inputGroupPrepend" required value="<?php print($username); ?>" onchange="nameCheck();">
                             <div class="caption">
                                 ※ユーザー名は4文字以上で登録ください
                             </div>
-                        <?php if(isset($error['username']) && $error['username'] > 0): ?>
+                        <?php if(isset($_SESSION['username'])): ?>
                             <div class="error">
-                                ユーザー名を入力してください
+                                <?php print($message2); ?>
                             </div>
                         <?php endif; ?>
                 </div>
