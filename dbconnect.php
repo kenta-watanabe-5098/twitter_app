@@ -1,12 +1,14 @@
 <?php
-try {
-    $dsn = 'mysql:dbname=*;host=localhost;charset=utf8';
+    $dsn = 'mysql:dbname=db_twitter;host=localhost;charset=utf8';
     $root = 'root';
     $pwd = 'root';
-    $db = new PDO($dsn, $root, $pwd);
+    $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
+
+try {
+    $db = new PDO($dsn, $root, $pwd, $options);
 
 } catch(PDOException $e) {
-    header('Content-Type: text/plain; charset=UTF-8', true, 500);
-    exit($e->getMessage()); 
+    print('接続に失敗しました：' . $e->getMessage());
+    exit();
 }
 ?>

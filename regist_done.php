@@ -1,3 +1,7 @@
+<?php
+session_start();
+$_SESSION = array();
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,7 +18,7 @@
         <header>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../twitter_app/index.php">home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">home</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/login.php">sign in</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/registration.php">sign up</a></li>
@@ -23,28 +27,16 @@
             </nav>
         </header>
 
-        <h2>投稿一覧</h2>
 
-        <div class="text-right">
+        <h2>登録完了</h2>
+
+        <div class="text-center">
             <button type="button" class="btn btn-primary rounded-pill btn-lg"><a href="post.php" id="postBtn">投稿する</a></button>
         </div>
-
-        <div class="card" style="width: auto;">
-            <img class="card-img-top" src="../twitter_app/images/test1.jpg"　alt="images/test1.jpg">
-                <div class="card-body">
-                    <p class="card-text">カードのタイトルに基づいて、カードのコンテンツの大部分を占める簡単なサンプルテキスト。</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">コメント</li>
-                    <li class="list-group-item">コメント</li>
-                    <li class="list-group-item">コメント</li>
-                </ul>
-                <div class="card-body">
-                    <a class="btn btn-primary" href="#" role="button">Reply</a>
-                    <a class="btn btn-primary" href="#" role="button">Like</a>
-                    <a class="btn btn-primary" href="#" role="button">Delete</a>
-                </div>
+        <div>
+            <p>登録が完了しました</p>
         </div>
+        
 
     </div>
 </body>
