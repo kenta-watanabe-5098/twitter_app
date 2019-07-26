@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(isset($_SESSION['id'])) {
+    $email = $_SESSION['id'];
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,7 +22,9 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">home</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/login.php">sign in</a></li>
-                    <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
+                    <?php if(isset($_SESSION['id'])): ?>
+                        <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
+                    <?php endif; ?>
                     <li class="breadcrumb-item"><a href="../twitter_app/registration.php">sign up</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/logout.php">sign out</a></li>
                 </ol>
@@ -42,7 +50,7 @@
                                     <p class="card-text">【コメント】テストコメント</p>
                                     <a class="btn btn-primary" href="../twitter_app/comment.php" role="button">Reply</a>
                                     <a class="btn btn-primary" href="#" role="button">Like</a>
-                                    <a class="btn btn-primary" href="#" role="button">Delete</a>
+                                    <?php if(isset($_SESSION['id'])): ?><a class="btn btn-primary" href="#" role="button">Delete</a><?php endif; ?>
                                 </div>
                     </div>
                 </div>
@@ -56,7 +64,7 @@
                                     <p class="card-text">【コメント】テストコメント</p>
                                     <a class="btn btn-primary" href="../twitter_app/comment.php" role="button">Reply</a>
                                     <a class="btn btn-primary" href="#" role="button">Like</a>
-                                    <a class="btn btn-primary" href="#" role="button">Delete</a>
+                                    <?php if(isset($_SESSION['id'])): ?><a class="btn btn-primary" href="#" role="button">Delete</a><?php endif; ?>
                                 </div>
                     </div>
                 </div>
@@ -70,7 +78,7 @@
                                     <p class="card-text">【コメント】テストコメント</p>
                                     <a class="btn btn-primary" href="../twitter_app/comment.php" role="button">Reply</a>
                                     <a class="btn btn-primary" href="#" role="button">Like</a>
-                                    <a class="btn btn-primary" href="#" role="button">Delete</a>
+                                    <?php if(isset($_SESSION['id'])): ?><a class="btn btn-primary" href="#" role="button">Delete</a><?php endif; ?>
                                 </div>
                     </div>
                 </div>
@@ -84,7 +92,7 @@
                                     <p class="card-text">【コメント】テストコメント</p>
                                     <a class="btn btn-primary" href="../twitter_app/comment.php" role="button">Reply</a>
                                     <a class="btn btn-primary" href="#" role="button">Like</a>
-                                    <a class="btn btn-primary" href="#" role="button">Delete</a>
+                                    <?php if(isset($_SESSION['id'])): ?><a class="btn btn-primary" href="#" role="button">Delete</a><?php endif; ?>
                                 </div>
                     </div>
                 </div>

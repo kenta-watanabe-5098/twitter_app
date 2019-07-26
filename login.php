@@ -1,16 +1,20 @@
 <?php
 session_start();
-require('session.php');
+session_regenerate_id(true);
 
+if(isset( $_COOKIE['auto_login'])) {
+    require('dbconnect.php');
+    $auto_login_key = $_COOKIE['auto_login'];
 
-$email = null;
-$password = null;
+    $stmt = $db->prepare('SELECT email FROM auto_login WHERE auto_login_key=?');
+    $stmt->execute(array($auto_login_key));
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if(isset($_SESSION['email'])) {
-    $email = $_SESSION['email'];
-}
-if(isset($_SESSION['password'])) {
-    $password = $_SESSION['password'];
+    if($data) {
+        $email = $data['email'];
+    }
+
+    
 }
 
 ?>
@@ -32,7 +36,9 @@ if(isset($_SESSION['password'])) {
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../twitter_app/index.php">home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">sign in</li>
-                    <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
+                    <?php if(isset($_SESSION['id'])): ?>
+                        <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
+                    <?php endif; ?>
                     <li class="breadcrumb-item"><a href="../twitter_app/registration.php">sign up</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/logout.php">sign out</a></li>
                 </ol>
@@ -41,10 +47,10 @@ if(isset($_SESSION['password'])) {
 
         <h2>ログイン</h2>
 
-        <form action="login_check.php" method="post" class="needs-validation">
+        <form id="twitter" action="login_check.php" method="post" class="needs-validation">
             <div class="form-group">
                 <label for="email">Eメールアドレス</label>
-                <input type="email" class="form-control is-invalid" id="email" name="email" placeholder="Eメールアドレス">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Eメールアドレス" value="<?php if(isset($_COOKIE['auto_login'])) { print($email); } ?>" onchange="emailCheck();">
                 <small class="text-muted">記入例：kenta.watanabe@tokyo.supersoftware.co.jp</small>
                 <div class="invalid-feedback">
                     正しく入力ください
@@ -52,7 +58,7 @@ if(isset($_SESSION['password'])) {
             </div>
             <div class="form-group">
                 <label for="password">パスワード</label>
-                <input type="password" class="form-control is-invalid" id="password" name="password" placeholder="パスワード">
+                <input type="password" class="form-control" id="password" name="password" placeholder="パスワード" onchange="passwordCheck();">
                 <div class="invalid-feedback">
                     正しく入力ください
                 </div>
@@ -64,5 +70,6 @@ if(isset($_SESSION['password'])) {
             <button type="submit" class="btn btn-primary">送信する</button>
         </form>
     </div>
+    <script src="../twitter_app/validation.js"></script>
 </body>
 </html>

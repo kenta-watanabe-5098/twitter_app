@@ -1,7 +1,7 @@
 <?php
     $dsn = 'mysql:dbname=db_twitter;host=localhost;charset=utf8';
     $root = 'root';
-    $pwd = 'root';
+    $pwd = '';
     $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
 
 try {

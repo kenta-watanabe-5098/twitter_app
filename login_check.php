@@ -1,14 +1,8 @@
 <?php
 session_start();
-require('dbconnect.php');
-require('session.php');
-
-if(empty($_POST)) {
-    header('Location: login.php');
-    exit();
-}
-
+   
 if(!empty($_POST)) {
+    require('dbconnect.php');
     $password = htmlspecialchars($_POST['password'], ENT_QUOTES);
     $email = htmlspecialchars($_POST['email'], ENT_QUOTES);
     $password = hash('sha256', $password);
@@ -17,18 +11,27 @@ if(!empty($_POST)) {
     $stmt->execute(array($email, $password));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = null;
+    $db = null;
+
+    $_SESSION['id'] = $data['email'];
 
     if($data) {
-        if($_POST['check'] == 'on') {
+        if(isset($_POST['check']) == 'on') {
+            require('session.php');
+            if(!empty($auto_login_ley)) {
+                session_set_cookie_params(60 * 60 * 24 * 7);
+                delete_auto_login($auto_login_key);
+            }
             setup_auto_login($email);
         }
 
         header('Location: index.php');
         exit();
-    } else {
-        echo 'ログインに失敗しました';
     }
+} else {
+    header('Location: login.php');
+    exit();
 }
+
 
 ?>

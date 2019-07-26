@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+if(isset($_SESSION['file_error']) == '1') {
+    $message = '正常に画像がアップロードされませんでした';
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -26,19 +33,24 @@
         <h2>投稿フォーム</h2>
         
         <div class="form-group">
-            <form action="" method="post">
+            <form action="post_check.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="exampleFormControlTextarea1">投稿内容の入力</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="こちらに入力ください"></textarea>
+                    <label for="textarea">投稿内容の入力</label>
+                    <textarea class="form-control" id="textarea" name="textarea" rows="3" placeholder="こちらに入力ください"><?php if(isset($_SESSION['text_error'])) print $_POST['textarea']; ?></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="File">画像投稿</label>
-                    <input type="file" id="File">
+                    <label for="file">画像投稿</label>
+                    <input type="file" id="file" name="file">
+                    <?php if(isset($_SESSION['file_error'])): ?>
+                        <div class="error">
+                            <?php print($message); ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">投稿</button>
                 </div>
             </form>
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">投稿</button>
-            </div>
         </div>
 
         

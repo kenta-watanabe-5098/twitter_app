@@ -16,7 +16,9 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../twitter_app/index.php">home</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/login.php">sign in</a></li>
-                    <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
+                    <?php if(isset($_SESSION['id'])): ?>
+                        <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
+                    <?php endif; ?>
                     <li class="breadcrumb-item"><a href="../twitter_app/registration.php">sign up</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/logout.php">sign out</a></li>
                 </ol>

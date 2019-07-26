@@ -1,12 +1,9 @@
 <?php
 session_start();
-require('session.php');
-
-
-if (!empty( $_COOKIE['auto_login'] )) {
-    delete_auto_login( $_COOKIE['auto_login'] );
-    
-    
+if(!empty($_SESSION['id'])) {
+    setcookie('PHPSESSID', '', time() - 42000, '/');
+    // setcookie('auto_login', '', time() - 42000, '/');
+    $_SESSION = array();
 }
 
 header('Location: index.php');

@@ -1,5 +1,6 @@
 <?php
 session_start();
+session_regenerate_id(true);
 $message1 = null;
 $message2 = null;
 $message3 = null;
@@ -53,7 +54,9 @@ if(isset($_SESSION['password_error']) == '1') {
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../twitter_app/index.php">home</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/login.php">sign in</a></li>
-                    <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
+                    <?php if(isset($_SESSION['id'])): ?>
+                        <li class="breadcrumb-item"><a href="../twitter_app/post.php">post</a></li>
+                    <?php endif; ?>
                     <li class="breadcrumb-item active" aria-current="page">sign up</a></li>
                     <li class="breadcrumb-item"><a href="../twitter_app/logout.php">sign out</a></li>
                 </ol>

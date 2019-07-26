@@ -5,11 +5,6 @@ $password = $_POST['password'];
 $email = $_POST['email'];
 $error = array();
 
-require('dbconnect.php');
-$stmt = $db->prepare('SELECT email FROM members WHERE email=?');
-$stmt->execute([$email]);
-$data = $stmt->fetch(PDO::FETCH_ASSOC);
-
 if($username == '' || mb_strlen($username) < 4) {
     $error = $error + array('username_error' => '1');
 }
@@ -18,9 +13,14 @@ if($password == '' || mb_strlen($password )< 8) {
 }
 if($email == '') {
     $error = $error + array('email_error' => '1');
-} 
-if($data) {
-    $error = $error + array('email_error' => '2');
+} else {
+    require('dbconnect.php');
+    $stmt = $db->prepare('SELECT email FROM members WHERE email=?');
+    $stmt->execute([$email]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($data) {
+        $error = $error + array('email_error' => '2');
+    }
 }
 
 
@@ -34,7 +34,7 @@ if(empty($error)) {
     $stmt->execute(array($username, $password, $email));
 
     $db = null;
-
+    $_SESSION['id'] = $email;
     header('Location: regist_done.php');
     exit();
 
@@ -46,7 +46,10 @@ if(empty($error)) {
     $_SESSION['username'] = $_POST['username'];
     $_SESSION['password'] = $_POST['password'];
     $_SESSION['email'] = $_POST['email'];
+
+    $db = null;
     header('Location: registration.php');
     exit();
 }
+
 ?>
